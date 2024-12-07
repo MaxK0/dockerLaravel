@@ -1,20 +1,17 @@
 FROM php:8.4.1-fpm-alpine
 
-WORKDIR /var/www/html
-
-RUN apt-get update && apt-get install -y \
-      apt-utils \
-      libpq-dev \
+RUN apk update && apk add --no-cache \
       libpng-dev \
       libzip-dev \
-      zip unzip \
-      git && \
-      docker-php-ext-install pdo_mysql && \
-      docker-php-ext-install bcmath && \
-      docker-php-ext-install gd && \
-      docker-php-ext-install zip && \
-      apt-get clean && \
-      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+      zip \
+      unzip \
+      git \
+      postgresql-dev \
+      && docker-php-ext-install pdo_mysql \
+      && docker-php-ext-install bcmath \
+      && docker-php-ext-install gd \
+      && docker-php-ext-install zip
 
-COPY ./_docker/app/php.ini /usr/local/etc/php/conf.d/php.ini
+COPY ./php.ini /usr/local/etc/php/conf.d/php.ini
 
+WORKDIR /var/www/html
