@@ -39,3 +39,11 @@ services:
       dockerfile: composer.Dockerfile
     volumes:
       - ./:/var/www/html
+
+  artisan:
+    build:
+      context: _docker/app
+      dockerfile: php.Dockerfile
+    volumes:
+      - ./:/var/www/html
+    entrypoint: ["php", "/var/www/html/artisan"]
